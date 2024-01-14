@@ -196,3 +196,33 @@ def generate_orientation_table(cube_state, d, last_movement=-3):
                 continue
             # Recursively generate orientation table for the next cube state
             generate_orientation_table(apply_movement(cube_state, m), d + 1, m)
+# Perform an iterative deepening A* search to find a solution for the Rubik's Cube
+def IDA_star(cube_state, d, moves, last_movement=-3):
+    # Check if the current cube state represents a solved Rubik's Cube
+    if is_cube_solved(cube_state):
+        # Print the sequence of moves leading to the solution
+        print_moves(moves)
+        return True
+    else:
+        # Get the piece orientation and permutation for the current cube state
+        sOP = get_piece_orientation_and_permutation(cube_state)
+        
+        # Check if the current depth is within the optimal range
+        if d > 0 and d >= HASH_O[index_orientation(sOP)] and d >= HASH_P[index_permutation(sOP)]:
+            dOptimal = False
+            # Explore possible moves for the current cube state
+            for m in range(9):
+                if int(m / 3) == int(last_movement / 3):
+                    continue
+                # Create a copy of the current sequence of moves and append the new move
+                newMoves = moves[:]
+                newMoves.append(m)
+                # Recursively check the next cube state with the updated move sequence
+                solved = IDA_star(apply_movement(cube_state, m), d - 1, newMoves, m)
+                if solved and not dOptimal:
+                    dOptimal = True
+            # Return True if an optimal solution is found
+            if dOptimal:
+                return True
+    # Return False if no solution is found at the current depth
+    return False
