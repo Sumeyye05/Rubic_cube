@@ -150,3 +150,49 @@ def print_cube(cube_state):
     print("      ├──┼──┤")
     print("      │ {}│ {}│".format(cube_state[14], cube_state[15]))
     print("      └──┴──┘")
+
+# Check if the script is executed as the main program
+if _name_ == "_main_":
+    # Initialize the Rubik's Cube state
+    cube_state = initialize_state()
+    # Display the initial state of the Rubik's Cube
+    print_cube(cube_state)
+    
+    # Apply a sequence of moves to the Rubik's Cube
+    cube_state = apply_algorithm_string(cube_state, "x y R U' R' U' F2 U' R U R' U F2")
+    # Display the state of the Rubik's Cube after the moves
+    print_cube(cube_state)
+    
+    # Normalize the face colors of the Rubik's Cube
+    cube_state = normalize_face_colors(cube_state)
+    # Display the state of the Rubik's Cube with normalized colors
+    print_cube(cube_state)
+    
+# Initialize hash tables for orientation and permutation
+HASH_O = np.ones(729, dtype=int) * 12
+HASH_P = np.ones(117649, dtype=int) * 12
+
+# Define move strings for display
+moveStrs = {0: "U", 1: "U'", 2: "U2", 3: "R", 4: "R'", 5: "R2", 6: "F", 7: "F'", 8: "F2"}
+
+# Generate a table for cube piece permutations
+def generate_permutation_table(cube_state, d, last_movement=-3):
+    index = index_permutation(get_piece_orientation_and_permutation(cube_state))
+    if d < HASH_P[index]:
+        HASH_P[index] = d
+        for m in range(9):
+            if int(m / 3) == int(last_movement / 3):
+                continue
+            # Recursively generate permutation table for the next cube state
+            generate_permutation_table(apply_movement(cube_state, m), d + 1, m)
+
+# Generate a table for cube piece orientations
+def generate_orientation_table(cube_state, d, last_movement=-3):
+    index = index_orientation(get_piece_orientation_and_permutation(cube_state))
+    if d < HASH_O[index]:
+        HASH_O[index] = d
+        for m in range(9):
+            if int(m / 3) == int(last_movement / 3):
+                continue
+            # Recursively generate orientation table for the next cube state
+            generate_orientation_table(apply_movement(cube_state, m), d + 1, m)
