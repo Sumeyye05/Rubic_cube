@@ -226,3 +226,40 @@ def IDA_star(cube_state, d, moves, last_movement=-3):
                 return True
     # Return False if no solution is found at the current depth
     return False
+
+# Print the sequence of moves in a human-readable format
+def print_moves(moves):
+    moveStr = ""
+    for m in moves:
+        moveStr += moveStrs[m] + " "
+    print(moveStr)
+
+# Solve the Rubik's Cube using iterative deepening A* search
+def solve_cube(cube_state):
+    # Display the initial state of the Rubik's Cube
+    print_cube(cube_state)
+
+    # Normalize face colors for consistent representation
+    print("normalizing stickers...")
+    cube_state = normalize_face_colors(cube_state)
+
+    # Generate pruning tables for cube piece orientations and permutations
+    print("generating pruning tables...")
+    generate_orientation_table(initialize_state(), 0)
+    generate_permutation_table(initialize_state(), 0)
+
+    # Search for a solution using iterative deepening A* search
+    print("searching...")
+    solved = False
+    depth = 1
+    while depth <= 11 and not solved:
+        print("depth {}".format(depth))
+        solved = IDA_star(cube_state, depth, [])
+        depth += 1
+
+# Check if the script is executed as the main program
+if __name__ == "__main__":
+    # Apply a specific algorithm to the initial Rubik's Cube state
+    cube_state = apply_algorithm_string(initialize_state(), "R U2 R2 F2 R' F2 R F R")
+    # Solve the modified Rubik's Cube
+    solve_cube(cube_state)
