@@ -101,3 +101,52 @@ def normalize_face_colors(cube_state):
     norm_cols[cube_state[18]] = 4
     norm_cols[cube_state[23]] = 5
     return norm_cols[cube_state]
+
+# Extract stickers for each piece based on the piece's orientation and permutation
+def get_stickers(sOP):
+    cube_state = np.zeros(24, dtype=int)
+    
+    # Set fixed positions for specific stickers
+    cube_state[[14, 18, 23]] = [3, 4, 5]
+    
+    # Assign colors to stickers based on the piece's orientation and permutation
+    for i in range(7):
+        cube_state[PIECES[i]] = COLORS[sOP[i, 0], sOP[i, 1], :]
+    
+    return cube_state
+
+# Calculate the index representing the orientation and permutation of the cube pieces
+def get_piece_orientation_and_permutation(cube_state):
+    return INDICES[np.dot(cube_state[PIECES], HASH_O_P)]
+
+# Calculate the index representing the permutation of a subset of cube pieces
+def index_permutation2(sOP):
+    return np.dot([sOP[i, 0] - np.count_nonzero(sOP[:i, 0] < sOP[i, 0]) for i in range(6)], FACT_6)
+
+# Calculate the index representing the orientation of a subset of cube pieces
+def index_orientation(sOP):
+    return np.dot(sOP[:-1, 1], POW_3)
+
+# Calculate the index representing the permutation of a subset of cube pieces
+def index_permutation(sOP):
+    return np.dot(sOP[:-1, 0], POW_7)
+
+# Calculate the combined index representing both orientation and permutation of cube pieces
+def index_piece_orientation_and_permutation(sOP):
+    return index_orientation(sOP) * 5040 + index_permutation2(sOP)
+
+# Display the current state of the Rubik's Cube in a human-readable format
+def print_cube(cube_state):
+    print("      ┌──┬──┐")
+    print("      │ {}│ {}│".format(cube_state[0], cube_state[1]))
+    print("      ├──┼──┤")
+    print("      │ {}│ {}│".format(cube_state[2], cube_state[3]))
+    print("┌──┬──┼──┼──┼──┬──┬──┬──┐")
+    print("│ {}│ {}│ {}│ {}│ {}│ {}│ {}│ {}│".format(cube_state[16], cube_state[17], cube_state[8], cube_state[9], cube_state[4], cube_state[5], cube_state[20], cube_state[21]))
+    print("├──┼──┼──┼──┼──┼──┼──┼──┤")
+    print("│ {}│ {}│ {}│ {}│ {}│ {}│ {}│ {}│".format(cube_state[18], cube_state[19], cube_state[10], cube_state[11], cube_state[6], cube_state[7], cube_state[22], cube_state[23]))
+    print("└──┴──┼──┼──┼──┴──┴──┴──┘")
+    print("      │ {}│ {}│".format(cube_state[12], cube_state[13]))
+    print("      ├──┼──┤")
+    print("      │ {}│ {}│".format(cube_state[14], cube_state[15]))
+    print("      └──┴──┘")
