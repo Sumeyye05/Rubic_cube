@@ -45,3 +45,59 @@ MOVE_DEF = np.array([ \
   [  5,  7,  4,  6, 13, 15, 12, 14,  9, 11,  8, 10, 17, 19, 16, 18,  1,  3,  0,  2, 22, 20, 23, 21], \
   [ 15, 14, 13, 12, 19, 18, 17, 16, 11, 10,  9,  8,  3,  2,  1,  0,  7,  6,  5,  4, 23, 22, 21, 20]  \
 ])
+
+COLORS = np.zeros([7, 3, 3], dtype=int)
+COLORS[0, 0, :] = [0, 5, 4]; COLORS[0, 1, :] = [4, 0, 5]; COLORS[0, 2, :] = [5, 4, 0]
+COLORS[1, 0, :] = [0, 4, 2]; COLORS[1, 1, :] = [2, 0, 4]; COLORS[1, 2, :] = [4, 2, 0]
+COLORS[2, 0, :] = [0, 2, 1]; COLORS[2, 1, :] = [1, 0, 2]; COLORS[2, 2, :] = [2, 1, 0]
+COLORS[3, 0, :] = [0, 1, 5]; COLORS[3, 1, :] = [5, 0, 1]; COLORS[3, 2, :] = [1, 5, 0]
+COLORS[4, 0, :] = [3, 2, 4]; COLORS[4, 1, :] = [4, 3, 2]; COLORS[4, 2, :] = [2, 4, 3]
+COLORS[5, 0, :] = [3, 1, 2]; COLORS[5, 1, :] = [2, 3, 1]; COLORS[5, 2, :] = [1, 2, 3]
+COLORS[6, 0, :] = [3, 5, 1]; COLORS[6, 1, :] = [1, 3, 5]; COLORS[6, 2, :] = [5, 1, 3]
+
+INDICES = np.zeros([58, 2], dtype=int)
+INDICES[50] = [0, 0]; INDICES[54] = [0, 1]; INDICES[13] = [0, 2]
+INDICES[28] = [1, 0]; INDICES[42] = [1, 1]; INDICES[ 8] = [1, 2]
+INDICES[14] = [2, 0]; INDICES[21] = [2, 1]; INDICES[ 4] = [2, 2]
+INDICES[52] = [3, 0]; INDICES[15] = [3, 1]; INDICES[11] = [3, 2]
+INDICES[47] = [4, 0]; INDICES[30] = [4, 1]; INDICES[40] = [4, 2]
+INDICES[25] = [5, 0]; INDICES[18] = [5, 1]; INDICES[35] = [5, 2]
+INDICES[23] = [6, 0]; INDICES[57] = [6, 1]; INDICES[37] = [6, 2]
+
+HASH_O_P = np.array([1, 2, 10])
+FACT_6 = np.array([720, 120, 24, 6, 2, 1])
+POW_3 = np.array([1, 3, 9, 27, 81, 243])
+POW_7 = np.array([1, 7, 49, 343, 2401, 16807])
+
+# Apply a single movement to the cube state
+def apply_movement(cube_state, move):
+    return cube_state[MOVE_DEF[move]]
+
+# Apply a sequence of movements described in an algorithm string to the cube state
+def apply_algorithm_string(cube_state, alg):
+    moves = alg.split(" ")
+    for m in moves:
+        if m in MOVE_INDEX:
+            cube_state = apply_movement(cube_state, MOVE_INDEX[m])
+    return cube_state
+
+# Initialize the cube state with default colors for each face
+def initialize_state():
+    return np.array([0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5])
+
+# Check if the cube state represents a solved cube
+def is_cube_solved(cube_state):
+    for i in range(6):
+        if not (cube_state[4 * i:4 * i + 4] == cube_state[4 * i]).all():
+            return False
+    return True
+
+# Normalize face colors based on a specific mapping
+def normalize_face_colors(cube_state):
+    norm_cols = np.zeros(6, dtype=int)
+    norm_cols[cube_state[18] - 3] = 1
+    norm_cols[cube_state[23] - 3] = 2
+    norm_cols[cube_state[14]] = 3
+    norm_cols[cube_state[18]] = 4
+    norm_cols[cube_state[23]] = 5
+    return norm_cols[cube_state]
