@@ -1,33 +1,35 @@
-# Rubic Cube Solver
+# Rubik's Cube Solver
+This Python script is a Rubik's Cube solver using the IDA* (Iterative Deepening A*) algorithm. It includes functions for cube manipulation, movement application, and solving. The solver generates pruning tables for piece orientation and permutation, then searches for the solution with increasing depth.
 
-This Python project includes an algorithm to solve the Rubik's Cube.
+# Getting Started
+Prerequisites
 
-## About the Project
+Make sure you have the following installed:
 
-This project contains an algorithm developed to solve the Rubik's Cube. The algorithm aims to solve the cube by applying different movements on the cube.
+Python (>=3.6)
 
-## How to Use
+NumPy
 
-1. Clone the project to your computer or download it as a ZIP file.
-2. If Python is not installed, download and install Python from the [official Python website](https://www.python.org/downloads/).
-3. Open a terminal or command prompt and navigate to the directory where the project is located.
-4. Run the `Algo_project_rubic_cube_solver.py` file to start the algorithm:
+-> pip install numpy
 
-    ```bash
-    python Algo_project_rubic_cube_solver.py
-    ```
+# Usage
+1. Open the rubiks_cube_solver.py file.
+2. Modify the cube_state variable in the __main__ block to set the initial cube state.
+3. Run the script: python rubiks_cube_solver.py
+   
+The script will display the initial cube state, normalize the stickers, generate pruning tables, and start the search for the optimal solution using IDA*.
+# Example
+Here's an example of how to use the solver:
 
-5. Wait until the cube is solved and observe the solution steps.
+from rubiks_cube_solver import apply_algorithm_string, solve_cube
 
-## Example Usage
+#Initialize cube state and apply an algorithm
 
-Below is a simple example of using the project to solve a Rubik's Cube:
-
-```python
-from Algo_project_rubic_cube_solver import initialize_state, solve_cube
-
-# Create the initial cube state
 cube_state = initialize_state()
 
-# Solve the Rubik's Cube
+cube_state = apply_algorithm_string(cube_state, "R U2 R2 F2 R' F2 R F R")
+
+#Solve the cube
+
 solve_cube(cube_state)
+
