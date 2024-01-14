@@ -152,7 +152,7 @@ def print_cube(cube_state):
     print("      └──┴──┘")
 
 # Check if the script is executed as the main program
-if _name_ == "_main_":
+if __name__ == "__main__":
     # Initialize the Rubik's Cube state
     cube_state = initialize_state()
     # Display the initial state of the Rubik's Cube
