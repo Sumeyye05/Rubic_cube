@@ -196,6 +196,7 @@ def generate_orientation_table(cube_state, d, last_movement=-3):
                 continue
             # Recursively generate orientation table for the next cube state
             generate_orientation_table(apply_movement(cube_state, m), d + 1, m)
+
 # Perform an iterative deepening A* search to find a solution for the Rubik's Cube
 def IDA_star(cube_state, d, moves, last_movement=-3):
     # Check if the current cube state represents a solved Rubik's Cube
