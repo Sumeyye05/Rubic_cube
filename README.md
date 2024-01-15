@@ -13,9 +13,9 @@ NumPy
 -> pip install numpy
 
 # Usage
-1. Open the rubiks_cube_solver.py file.
+1. Open the Algo_prpject_rubic_cube_solver.py file.
 2. Modify the cube_state variable in the __main__ block to set the initial cube state.
-3. Run the script: python rubiks_cube_solver.py
+3. Run the script: python Algo_prpject_rubic_cube_solver.py
    
 The script will display the initial cube state, normalize the stickers, generate pruning tables, and start the search for the optimal solution using IDA*.
 # Example
