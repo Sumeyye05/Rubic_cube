@@ -1,35 +1,31 @@
 # Rubik's Cube Solver
 This Python script is a Rubik's Cube solver using the IDA* (Iterative Deepening A*) algorithm. It includes functions for cube manipulation, movement application, and solving. The solver generates pruning tables for piece orientation and permutation, then searches for the solution with increasing depth.
 
-# Getting Started
-Prerequisites
+## Instructions
 
-Make sure you have the following installed:
+1. **Download the Project Zip:**
+   - Download the zip file named `Group2_Algo_Project.zip` from the provided link.
 
-Python (>=3.6)
+2. **Extract the Zip File:**
+   - Extract the contents of the zip file to a directory of your choice.
 
-NumPy
+3. **Navigate to the Directory:**
+   - Open a terminal or command prompt and navigate to the directory where you extracted the files.
 
--> pip install numpy
+4. **Run the Python Script:**
+   - Run the following command to execute the Rubik's Cube solver script:
+     ```bash
+     python Algo_project_rubic_cube_solver.py
+     ```
+   - Ensure that you have Python installed on your system.
 
-# Usage
-1. Open the Algo_project_rubic_cube_solver.py file.
-2. Modify the cube_state variable in the __main__ block to set the initial cube state.
-3. Run the script: python Algo_project_rubic_cube_solver.py
+5. **Follow the Output:**
+   - The script will display the initial state of the Rubik's Cube, normalize face colors, generate pruning tables, and then start searching for a solution using iterative deepening A* search.
+
+6. **Check the Solution:**
+   - The script will print the sequence of moves needed to solve the Rubik's Cube if a solution is found.
    
 The script will display the initial cube state, normalize the stickers, generate pruning tables, and start the search for the optimal solution using IDA*.
-# Example
-Here's an example of how to use the solver:
-
-from rubiks_cube_solver import apply_algorithm_string, solve_cube
-
-#Initialize cube state and apply an algorithm
-
-cube_state = initialize_state()
-
-cube_state = apply_algorithm_string(cube_state, "R U2 R2 F2 R' F2 R F R")
-
-#Solve the cube
-
-solve_cube(cube_state)
-
+## Example Usage
+```bash
+python Algo_project_rubic_cube_solver.py
