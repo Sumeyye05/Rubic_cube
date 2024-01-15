@@ -264,3 +264,4 @@ if __name__ == "__main__":
     cube_state = apply_algorithm_string(initialize_state(), "R U2 R2 F2 R' F2 R F R")
     # Solve the modified Rubik's Cube
     solve_cube(cube_state)
+    k=input("press close to exit")
