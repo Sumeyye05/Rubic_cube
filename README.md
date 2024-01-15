@@ -24,8 +24,12 @@ This Python script is a Rubik's Cube solver using the IDA* (Iterative Deepening 
 
 6. **Check the Solution:**
    - The script will print the sequence of moves needed to solve the Rubik's Cube if a solution is found.
+  
+   ### Or
+   - You can directly run the file with .exe extension.
    
 The script will display the initial cube state, normalize the stickers, generate pruning tables, and start the search for the optimal solution using IDA*.
 ## Example Usage
 ```bash
 python Algo_project_rubic_cube_solver.py
+
